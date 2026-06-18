@@ -14,9 +14,7 @@ p.PAUSE = 0.05
 workbook = o.load_workbook("data.xlsx")
 sheet = workbook["sheet"]
 data = [[], [], [], [], []]
-goldRegions = [(679,506,808,705), (828,506,958,705), (980,506,1110,705), (1125,506,1256,705)]
-regularRegions = [(775,493,895,675), (914,493,1033,675), (1060,493,1181,675), (1200,493,1321,675)]
-ButtonPos = [(0,0), (0,0), (0,0), (0,0)]
+
 possibleSymbols = ["clover", "crown", "net", "snake", "double", "stack", "coin", "nothing"]
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -29,8 +27,12 @@ for section in range(5):
 
 if messagebox.askyesno("","Are you using the golden slot machine?"):
     rerollCount = 5
+    regions = [(679,506,808,705), (828,506,958,705), (980,506,1110,705), (1125,506,1256,705)]
+    buttonPos = [(747,804), (892,804), (1042,804), (1195,804)]
 else:
     rerollCount = 3
+    regions = [(775,493,895,675), (914,493,1033,675), (1060,493,1181,675), (1200,493,1321,675)]
+    buttonPos = [(834,767), (973,767), (1118,767), (1261,767)]
 
 def stop():
     _exit(0)
@@ -71,12 +73,12 @@ while True:
     rerollsUsed = 0
     while True:
         symbols = []
-        for region in goldRegions:
+        for region in regions:
             symbols.append(detectSymbol((region)))
 
         reroll, index = rerollCheck(symbols)
         if reroll:
-            p.moveTo(ButtonPos[index])
+            p.moveTo(buttonPos[index])
             if debug:
                 sleep(1)
             p.click()
